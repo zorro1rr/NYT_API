@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>What to read today</title>
+
+	<style type="text/css">
+		body {
+			margin: 1em auto;
+			max-width: 40em;
+			width: 88%;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>What to read today</h1>
+
+	<div id="app"></div>
+
+	<script>
+	/*!
+ * Sanitize and encode all HTML in a user-submitted string
+ * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
+ * @param  {String} str  The user-submitted string
+ * @return {String} str  The sanitized string
+ */
+var sanitizeHTML = function (str) {
+	var temp = document.createElement('div');
+	temp.textContent = str;
+	return temp.innerHTML;
+};
+
+
+//in this project we need to grab the top three articles from the NYT API from 3 different news sections.
+var apiKey = 'dAA9q6pvIOeZy6SNeo7yPZpCAiZjo2iR';
+//array valiable that will be used to loop through different sections during API call.
+var sections = ['arts', 'automobiles', 'books'];
+var numberOfSections = 3;
+//grab the app to inject html into
+var app = document.querySelector('#app');
+//limit the news stories grabed to the top 3 in each section
+var firstFewArticles = function (articles) {
+  return articles.slice(0, numberOfSections);
+};
+//helper function to render the news with
+const renderNews = function(articles, section){
+  app.innerHTML += articles.map(function (story) {
+    var html = '<h2><a href="'+ sanitizeHTML(story.url) +'">' + sanitizeHTML(story.title) + '</a></h2>' +
+              '<p>' + sanitizeHTML(story.abstract) + '</p>' +
+              '<p>' + sanitizeHTML(story.byline) + '</p>';
+    return html;
+    }).join('');
+};
+//api promise call
+var getNews = function (section) {
+    fetch('https://api.nytimes.com/svc/topstories/v2/' + section + '.json?api-key=' + apiKey).then(function (response) {
+	// The API call was successful!
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+	// This is the JSON from our response
+	console.log(data);
+  //get the first few articles
+  var firstArticles = firstFewArticles(data.results)
+
+  //render into the dom
+  renderNews(firstArticles, section);
+
+}).catch(function (err) {
+	// There was an error
+	console.warn('Something went wrong.', err);
+});
+}
+
+//get the articles for each section and run the api calls.
+sections.forEach(function (section) {
+	getNews(section);
+});
+
+	</script>
+</body>
+</html>
