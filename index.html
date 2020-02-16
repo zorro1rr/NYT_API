@@ -9,15 +9,19 @@
 			max-width: 40em;
 			width: 88%;
 		}
+		h1 {
+  text-decoration: underline;
+		}
 	</style>
 </head>
 <body>
 
-	<h1>What to read today</h1>
+	<h1>What to read today:</h1>
 
 	<div id="app"></div>
 
 	<script>
+	//in this project we need to grab the top three articles from the NYT API from 3 different news sections.
 	/*!
  * Sanitize and encode all HTML in a user-submitted string
  * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
@@ -30,11 +34,10 @@ var sanitizeHTML = function (str) {
 	return temp.innerHTML;
 };
 
-
-//in this project we need to grab the top three articles from the NYT API from 3 different news sections.
 var apiKey = 'dAA9q6pvIOeZy6SNeo7yPZpCAiZjo2iR';
 //array valiable that will be used to loop through different sections during API call.
 var sections = ['arts', 'automobiles', 'books'];
+//make variable for number of sections so it can be changed easily.
 var numberOfSections = 3;
 //grab the app to inject html into
 var app = document.querySelector('#app');
@@ -44,13 +47,14 @@ var firstFewArticles = function (articles) {
 };
 //helper function to render the news with
 const renderNews = function(articles, section){
-  app.innerHTML += articles.map(function (story) {
-    var html = '<h2><a href="'+ sanitizeHTML(story.url) +'">' + sanitizeHTML(story.title) + '</a></h2>' +
+  app.innerHTML +=
+	articles.map(function (story) {
+		html = '<h2>'+ section +': <a href="'+ sanitizeHTML(story.url) +'">' + 			sanitizeHTML(story.title) + '</a></h2>' +
               '<p>' + sanitizeHTML(story.abstract) + '</p>' +
               '<p>' + sanitizeHTML(story.byline) + '</p>';
     return html;
-    }).join('');
-};
+	}).join('');
+}
 //api promise call
 var getNews = function (section) {
     fetch('https://api.nytimes.com/svc/topstories/v2/' + section + '.json?api-key=' + apiKey).then(function (response) {
