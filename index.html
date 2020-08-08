@@ -1,89 +1,285 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>What to read today</title>
+  <head>
+    <title>What to read today</title>
 
-	<style type="text/css">
-		body {
-			margin: 1em auto;
-			max-width: 40em;
-			width: 88%;
-		}
-		h1 {
-  text-decoration: underline;
-		}
-	</style>
-</head>
-<body>
+    <style type="text/css">
+    *{
+      /* outline: 1px solid red; */
+      margin: 0;
+    }
+      #app {
+        margin: 1em auto;
+        max-width: 50em;
+        width: 88%;
+      }
+      h1 {
+        text-decoration: underline;
+        text-align: center;
+      }
+      #checkboxes{
+        display: flex;
 
-	<h1>What to read today:</h1>
+        margin: .5rem;
+        justify-content: center;
+      }
+      #choices {
+        width: 88%;
+        display: flex;
+        width: max-content;
 
-	<div id="app"></div>
+      }
+      #checkboxes div{
+        margin: .1rem;
+      }
+      #NumberOfArt{
+        display: flex;
+        padding-left: 30px;
+        align-items: center;
+      }
 
-	<script>
-	//in this project we need to grab the top three articles from the NYT API from 3 different news sections.
-	/*!
- * Sanitize and encode all HTML in a user-submitted string
- * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
- * @param  {String} str  The user-submitted string
- * @return {String} str  The sanitized string
- */
-var sanitizeHTML = function (str) {
-	var temp = document.createElement('div');
-	temp.textContent = str;
-	return temp.innerHTML;
-};
+      #NumberOfArt, button{
+        margin-left: 5px;
+      }
+    </style>
+  </head>
 
-var apiKey = 'dAA9q6pvIOeZy6SNeo7yPZpCAiZjo2iR';
-//array valiable that will be used to loop through different sections during API call.
-var sections = ['arts', 'automobiles', 'books'];
-//make variable for number of sections so it can be changed easily.
-var numberOfSections = 3;
-//grab the app to inject html into
-var app = document.querySelector('#app');
-//limit the news stories grabed to the top 3 in each section
-var firstFewArticles = function (articles) {
-  return articles.slice(0, numberOfSections);
-};
-//helper function to render the news with
-const renderNews = function(articles, section){
-  app.innerHTML +=
-	articles.map(function (story) {
-		html = '<h2>'+ section +': <a href="'+ sanitizeHTML(story.url) +'">' + 			sanitizeHTML(story.title) + '</a></h2>' +
-              '<p>' + sanitizeHTML(story.abstract) + '</p>' +
-              '<p>' + sanitizeHTML(story.byline) + '</p>';
-    return html;
-	}).join('');
-}
-//api promise call
-var getNews = function (section) {
-    fetch('https://api.nytimes.com/svc/topstories/v2/' + section + '.json?api-key=' + apiKey).then(function (response) {
-	// The API call was successful!
-	if (response.ok) {
-		return response.json();
-	} else {
-		return Promise.reject(response);
-	}
-}).then(function (data) {
-	// This is the JSON from our response
-	console.log(data);
-  //get the first few articles
-  var firstArticles = firstFewArticles(data.results)
+  <body>
+    <div id="checkboxes">
+      <div id="choices">
+    <div>
+      <input type="checkbox" id="arts" name="arts"/>
+      <label for="arts">Arts</label><br />
+      <input type="checkbox" id="automobiles" name="arts"/>
+      <label for="automobiles">Automobiles</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="books" name="arts"/>
+      <label for="books">Books</label><br />
+      <input type="checkbox" id="business" />
+      <label for="business">Business</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="fashion" />
+      <label for="fashion">Fashion</label><br />
+      <input type="checkbox" id="food" />
+      <label for="food">Food</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="health" />
+      <label for="health">Health</label><br />
+      <input type="checkbox" id="home" />
+      <label for="home">Home</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="insider" />
+      <label for="insider">Insider</label><br />
+      <input type="checkbox" id="magazine" />
+      <label for="magazine">Magazine</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="movies" />
+      <label for="movies">Movies</label><br />
+      <input type="checkbox" id="nyregion" />
+      <label for="nyregion">NY Region</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="obituaries" />
+      <label for="obituaries">Obituaries</label><br />
+      <input type="checkbox" id="opinion" />
+      <label for="opinion">Opinion</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="politics" />
+      <label for="politics">Politics</label><br />
+      <input type="checkbox" id="realestate" />
+      <label for="realestate">Real Estate</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="science" />
+      <label for="science">Science</label><br />
+      <input type="checkbox" id="sports" />
+      <label for="sports">Sports</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="sundayreview" />
+      <label for="sundayreview">Sunday Review</label><br />
+      <input type="checkbox" id="technology" />
+      <label for="technology">Technology</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="theater" />
+      <label for="theater">Theater</label><br />
+      <input type="checkbox" id="t-magazine" />
+      <label for="t-magazine">T-Magazine</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="travel" />
+      <label for="travel">Travel</label><br />
+      <input type="checkbox" id="upshot" />
+      <label for="upshot">Upshot</label><br />
+    </div>
+    <div>
+      <input type="checkbox" id="us" />
+      <label for="us">US</label><br />
+      <input type="checkbox" id="world" />
+      <label for="world">World</label><br />
+    </div>
+    <div id="NumberOfArt">
+      <div>
+      <label for="number">Number of Articles Per Section</label>
+      <select name="number" id="number">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+    </div>
+    </div>
 
-  //render into the dom
-  renderNews(firstArticles, section);
+      <button id="submit">Submit</button>
+    </div>
 
-}).catch(function (err) {
-	// There was an error
-	console.warn('Something went wrong.', err);
-});
-}
+  </div>
 
-//get the articles for each section and run the api calls.
-sections.forEach(function (section) {
-	getNews(section);
-});
 
-	</script>
-</body>
+
+    </form>
+    <h1>What to read today:</h1>
+
+    <div id="app"></div>
+
+
+
+
+
+    <script>
+      //function to sanitize the article data
+  var sanitizeHTML = function(str) {
+      var temp = document.createElement("div");
+      temp.textContent = str;
+      return temp.innerHTML;
+  };
+  //store api key
+  var apiKey = "dAA9q6pvIOeZy6SNeo7yPZpCAiZjo2iR";
+
+
+  //make variable for number of sections so it can be changed easily.
+  var numberOfSections = 3;
+//grab the pull down list
+  var number = document.querySelector('#number')
+
+
+
+
+
+  //grab the app to inject html into
+  var app = document.querySelector("#app");
+  //limit the news stories grabed to the top 3 in each section
+  var firstFewArticles = function(articles) {
+      return articles.slice(0, numberOfSections);
+  };
+
+  //querySelectors for the default checkBoxes
+  const arts = document.querySelector('#arts');
+  const automobiles = document.querySelector('#automobiles');
+  const books = document.querySelector('#books');
+
+  //querySelector for submit button
+  const submit = document.querySelector('#submit');
+
+  var sections = [];
+  //set first three checkboxes to check to give page some content display on load
+  arts.checked = true;
+  automobiles.checked = true;
+  books.checked = true;
+
+
+  function sectionCheck() {
+    //change value of numberOfSections to reflect user's  choice
+    numberOfSections = number.value;
+    //set apps content to nothing so when we resumbit the section choice it does not leave the old sections
+    app.innerHTML = " ";
+    //grab all of the checkboxes and turn them to array to run forEach
+      var checkboxes = document.querySelectorAll(`[type*="checkbox"]`);
+
+      Array.prototype.slice.call(checkboxes).forEach(checkbox => {
+          if (checkbox.checked === true) {
+              sections.push(checkbox.id);
+          }
+      });
+      //get the articles for each section and run the api calls.
+      sections.forEach(function(section) {
+          getNews(section);
+      });
+  }
+
+
+  //helper function to render the news with
+  const renderNews = function(articles, section) {
+    //clear an element off the array so we don't have repeats in next search
+    sections.shift()
+      app.innerHTML += articles
+          .map(function(story) {
+              html =
+                  "<h2>" +
+                  section +
+                  ': <a href="' +
+                  sanitizeHTML(story.url) +
+                  '">' +
+                  sanitizeHTML(story.title) +
+                  "</a></h2>" +
+                  "<p>" +
+                  sanitizeHTML(story.abstract) +
+                  "</p>" +
+                  "<p>" +
+                  sanitizeHTML(story.byline) +
+                  "</p>";
+              return html;
+          })
+          .join("");
+  };
+  //api promise call
+  var getNews = function(section) {
+      fetch(
+              "https://api.nytimes.com/svc/topstories/v2/" +
+              section +
+              ".json?api-key=" +
+              apiKey
+          )
+          .then(function(response) {
+              // The API call was successful!
+              if (response.ok) {
+                  return response.json();
+              } else {
+                  return Promise.reject(response);
+              }
+          })
+          .then(function(data) {
+              // This is the JSON from our response
+              //get the first few articles
+
+              var firstArticles = firstFewArticles(data.results);
+
+              //render into the dom
+              renderNews(firstArticles, section);
+          })
+          .catch(function(err) {
+              // There was an error
+              console.warn("Something went wrong.", err);
+          });
+  };
+
+
+
+
+  //run first section check for page load
+  sectionCheck();
+  //listen for clicks on submit button and re-run the api calls for new sections
+  submit.addEventListener('click', sectionCheck, false);
+    </script>
+  </body>
 </html>
