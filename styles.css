@@ -1,0 +1,121 @@
+* {
+  /* outline: 1px solid red; */
+  margin: 0;
+}
+#content {
+  background-image: url("./skyline2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  background-color: #24374b;
+  height: 100vh;
+}
+#app {
+  margin: 1em auto;
+  max-width: 60em;
+  width: 88%;
+  color: white;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 727px;
+  margin-bottom: 1rem;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 2px;
+  background-color: #20bf6b;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #445364;
+  border-radius: 2px;
+}
+::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+h1 {
+  text-decoration: underline;
+  text-align: center;
+}
+#checkboxes {
+  display: flex;
+  margin: 0.5rem;
+  justify-content: center;
+}
+#choices {
+  width: 88%;
+  display: flex;
+  width: max-content;
+  color: white;
+}
+#checkboxes div {
+  margin: 0.1rem;
+}
+#NumberOfArt {
+  display: flex;
+  padding-left: 30px;
+  align-items: center;
+}
+#NumberOfArt,
+button {
+  margin-left: 5px;
+}
+#NYT {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+svg {
+  width: 477px;
+  height: 62px;
+}
+.story {
+  margin-left: 0.6rem;
+}
+a {
+  color: #18bfef;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+h3 {
+  display: inline;
+}
+.auth {
+  display: inline;
+}
+p {
+  font-size: 1.1rem;
+  margin-left: 3px;
+}
+
+h2 {
+  color: #bf8220;
+  text-decoration: underline;
+  font-size: 2rem;
+}
+hr {
+  width: 75%;
+  margin: auto;
+}
+#submit {
+  color: #20bf6b;
+  text-transform: uppercase;
+  background: transparent;
+  padding: 10px 20px;
+  border: 4px solid #20bf6b;
+  border-radius: 6px;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+}
+
+#submit:hover {
+  cursor: pointer;
+  color: #18bfef;
+  border-radius: 50px;
+  border-color: #18bfef;
+  transition: all 0.3s ease 0s;
+}
